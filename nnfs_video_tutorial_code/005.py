@@ -20,11 +20,26 @@ class Activation_ReLU:
         self.output = np.maximum(0, inputs)
 
 
-layer1 = Layer_Dense(2,5)
-activation1 = Activation_ReLU()
+def run_layer_chain(intput_vec, layerobj_list, activation_obj):
+    temp_output = intput_vec
+    for layer in layerobj_list:
+        layer.forward(temp_output)
+        temp_output = layer.output
+        activation_obj.forward(temp_output)
+        temp_output = activation_obj.output
+    return temp_output
 
-layer1.forward(X)
+
+layer1 = Layer_Dense(2,5)
+layer2 = Layer_Dense(5,5)
+
+l_list = [layer1, layer2]
+# activation1 =
+print(run_layer_chain(X, l_list, Activation_ReLU()))
+# layer1.forward(X)
 
 #print(layer1.output)
-activation1.forward(layer1.output)
-print(activation1.output)
+# activation1.forward(layer1.output)
+# print(activation1.output)
+
+
